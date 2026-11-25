@@ -10,7 +10,7 @@ from folium.plugins import BeautifyIcon
 # 桃園藝文店基本設定
 STORE_NAME = "World Gym 桃園藝文店"
 STORE_CODE = "TYYW"
-MAP_CENTER = [25.0143198, 121.2974522]
+MAP_CENTER = [25.0150199,121.3014138]
 
 
 # 從檔名抽取業務姓名
