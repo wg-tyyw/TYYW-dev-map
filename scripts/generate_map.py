@@ -39,14 +39,15 @@ def create_map(center, zoom_start=15):
         name="開發路線"
     ).add_to(map_object)
 
-      folium.TileLayer(
+    folium.TileLayer(
         "openstreetmap",
         name="特約商家",
         show=False
     ).add_to(map_object)
 
-
     return map_object
+
+
 
 
 # 讀取 GPX 開發路線
