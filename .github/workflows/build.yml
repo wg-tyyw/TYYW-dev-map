@@ -3,9 +3,12 @@ name: Auto-generate TYYW Map
 
 on:
   push:
+    branches:
+      - main
     paths:
-      - '**.gpx'
+      - '**/*.gpx'
       - '**/shops.json'
+      - '**/README.md'
       - 'scripts/generate_map.py'
       - 'scripts/generate_home.py'
       - '.github/workflows/build.yml'
@@ -13,6 +16,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: generate-map
@@ -40,10 +45,6 @@ jobs:
           shopt -s nullglob
           folders=(????-??/)
 
-          if [ ${#folders[@]} -eq 0 ]; then
-            echo "找不到任何月份資料夾"
-          fi
-
           for folder in "${folders[@]}"; do
             folder_name="${folder%/}"
             echo "正在產生 $folder_name"
@@ -66,3 +67,39 @@ jobs:
             git pull --rebase
             git push
           fi
+
+      - name: Prepare Website
+        shell: bash
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+
+          shopt -s nullglob
+
+          for folder in ????-??/; do
+            if [ -f "${folder}index.html" ]; then
+              mkdir -p "_site/${folder}"
+              cp "${folder}index.html" "_site/${folder}index.html"
+            fi
+          done
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
