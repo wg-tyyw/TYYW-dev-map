@@ -1,22 +1,4 @@
 {
   "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "World Gym 桃園藝文店",
-        "address": "\t桃園市桃園區同德五街77號5樓",
-        "note": "Mika",
-        "category": "餐飲",
-        "emoji": "🍴"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          121.2999659,
-          25.0143478
-        ]
-      }
-    }
-  ]
+  "features": []
 }
